@@ -2,10 +2,14 @@ extends CharacterBody3D
 
 @onready var head = $head
 
+enum PlayerState {CanMove, Interacting}
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 @export var mouse_sens = 0.2
+
+var player_state = PlayerState.CanMove
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -16,6 +20,12 @@ func _input(event: InputEvent) -> void:
 		head.rotate_x(-deg_to_rad(event.relative.y * mouse_sens))
 
 func _physics_process(delta: float) -> void:
+	_handle_player_movement(delta)
+
+func _handle_player_movement(delta: float) -> void:
+	if player_state != PlayerState.CanMove:
+		return
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
