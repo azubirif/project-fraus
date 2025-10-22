@@ -18,6 +18,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(-deg_to_rad(event.relative.x * mouse_sens))
 		head.rotate_x(-deg_to_rad(event.relative.y * mouse_sens))
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-50), deg_to_rad(0))
 
 func _physics_process(delta: float) -> void:
 	_handle_player_movement(delta)
