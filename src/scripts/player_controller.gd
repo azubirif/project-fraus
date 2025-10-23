@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var head = $head
 @onready var cam = $head/Camera3D
+@onready var pickup_pos = $head/pickup
 
 enum PlayerState {CanMove, Interacting}
 
@@ -12,6 +13,7 @@ const JUMP_VELOCITY = 4.5
 @export var ray_length = 5.0
 
 var player_state = PlayerState.CanMove
+var current_pickup: Object = null
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -30,6 +32,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_handle_player_movement(delta)
 	_handle_raycasts(delta)
+	_handle_pickedup(delta)
 
 func _handle_player_movement(delta: float) -> void:
 	if player_state != PlayerState.CanMove:
@@ -80,6 +83,25 @@ func _handle_raycasts(delta: float):
 		if result.collider is Object:
 			var object = result.collider
 			if object.has_method("interact"):
-				print("Interactable")
-			else:
-				print("Cant interact")
+				if Input.is_action_just_pressed("interact"):
+					object.interact()
+			elif object.has_method("pickup"):
+				if Input.is_action_just_pressed("interact"):
+					object.pickup()
+					if current_pickup == null:
+						print("Picking up")
+						current_pickup = object
+					else:
+						print("Stop")
+						current_pickup = null
+
+func _handle_pickedup(delta: float):
+	if current_pickup == null:
+		return
+
+	var original_trans: Transform3D = current_pickup.global_transform
+	var target_trans: Transform3D = pickup_pos.global_transform
+
+	var vec: Vector3 = (target_trans.origin - original_trans.origin)
+	var force_magnitude = vec.length() ** 2
+	var dir: Vector3 = vec.normalized()
