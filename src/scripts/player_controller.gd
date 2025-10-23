@@ -91,9 +91,11 @@ func _handle_raycasts(delta: float):
 					if current_pickup == null:
 						print("Picking up")
 						current_pickup = object
+						#current_pickup.gravity_scale = 0.0
 					else:
 						print("Stop")
 						current_pickup = null
+						#current_pickup.gravity_scale = 1.0
 
 func _handle_pickedup(delta: float):
 	if current_pickup == null:
@@ -103,5 +105,10 @@ func _handle_pickedup(delta: float):
 	var target_trans: Transform3D = pickup_pos.global_transform
 
 	var vec: Vector3 = (target_trans.origin - original_trans.origin)
-	var force_magnitude = vec.length() ** 2
+	var dist = vec.length()
 	var dir: Vector3 = vec.normalized()
+	if dist > 0.5:
+		current_pickup.linear_velocity = dir * 10.0
+	else:
+		current_pickup.global_position = current_pickup.global_position.lerp(pickup_pos.global_position, delta * 10)
+		current_pickup.linear_velocity = Vector3.ZERO
