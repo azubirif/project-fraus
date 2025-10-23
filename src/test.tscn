@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs53ghighs1sd"]
+[gd_scene load_steps=7 format=3 uid="uid://cs53ghighs1sd"]
 
+[ext_resource type="Script" uid="uid://bw5kf4dpr8vrs" path="res://interactable.gd" id="1_8uh7m"]
 [ext_resource type="Script" uid="uid://bx6h6xb310tf" path="res://scripts/player_controller.gd" id="1_37kl0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mf4mk"]
@@ -36,6 +37,11 @@ use_collision = true
 transform = Transform3D(-4.371139e-08, 0, 13.783962, 0, 6.3347583, 0, -1, 0, -6.0251614e-07, 1.9371643, 2.738545, 14.4557705)
 use_collision = true
 
+[node name="CSGBox3D4" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9323287, 0, 8.638779)
+use_collision = true
+script = ExtResource("1_8uh7m")
+
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9254341, 0)
 script = ExtResource("1_37kl0")
@@ -48,3 +54,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8226113, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D/head"]
 fov = 60.0
+
+[node name="pickup" type="Node3D" parent="CharacterBody3D/head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121008635, -1.7184291)
