@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var head = $head
 @onready var cam = $head/Camera3D
 @onready var pickup_pos = $head/pickup
+@onready var leave_pos = $head/leave
 
 enum PlayerState {CanMove, Interacting}
 
@@ -14,6 +15,8 @@ const JUMP_VELOCITY = 4.5
 
 var player_state = PlayerState.CanMove
 var current_pickup: Object = null
+
+var just_picked_up = false
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -90,25 +93,43 @@ func _handle_raycasts(delta: float):
 					object.pickup()
 					if current_pickup == null:
 						print("Picking up")
-						current_pickup = object
-						#current_pickup.gravity_scale = 0.0
+						pickup_item(object)
 					else:
 						print("Stop")
-						current_pickup = null
-						#current_pickup.gravity_scale = 1.0
+						drop_item(object)
 
 func _handle_pickedup(delta: float):
 	if current_pickup == null:
 		return
+	#var original_trans: Transform3D = current_pickup.global_transform
+	#var target_trans: Transform3D = pickup_pos.global_transform
+#
+	#var vec: Vector3 = (target_trans.origin - original_trans.origin)
+	#var dist = vec.length()
+	#var dir: Vector3 = vec.normalized()
+	#if dist > 0.5:
+		#current_pickup.linear_velocity = dir * 10.0
+	#else:
+		#current_pickup.global_position = current_pickup.global_position.lerp(pickup_pos.global_position, delta * 10)
+		#current_pickup.linear_velocity = Vector3.ZERO
+	
+	current_pickup.global_position = pickup_pos.global_position
+	current_pickup.global_rotation = pickup_pos.global_rotation
+	
+	if not just_picked_up and Input.is_action_just_pressed("interact") and current_pickup != null:
+		drop_item(current_pickup)
+		return
+		
+	just_picked_up = false
 
-	var original_trans: Transform3D = current_pickup.global_transform
-	var target_trans: Transform3D = pickup_pos.global_transform
+func pickup_item(item: Object):
+	just_picked_up = true
+	current_pickup = item
+	item.freeze = true
+	item.get_node("CollisionShape3D").set_deferred("disabled", true)
 
-	var vec: Vector3 = (target_trans.origin - original_trans.origin)
-	var dist = vec.length()
-	var dir: Vector3 = vec.normalized()
-	if dist > 0.5:
-		current_pickup.linear_velocity = dir * 10.0
-	else:
-		current_pickup.global_position = current_pickup.global_position.lerp(pickup_pos.global_position, delta * 10)
-		current_pickup.linear_velocity = Vector3.ZERO
+func drop_item(item: Object):
+	current_pickup.global_position = leave_pos.global_position
+	current_pickup = null
+	item.freeze = false
+	item.get_node("CollisionShape3D").set_deferred("disabled", false)
