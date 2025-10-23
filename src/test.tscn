@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs53ghighs1sd"]
+[gd_scene load_steps=12 format=3 uid="uid://cs53ghighs1sd"]
 
 [ext_resource type="Script" uid="uid://bw5kf4dpr8vrs" path="res://scripts/interfaces/interactable.gd" id="1_8uh7m"]
 [ext_resource type="Script" uid="uid://bx6h6xb310tf" path="res://scripts/player_controller.gd" id="1_37kl0"]
+[ext_resource type="Texture2D" uid="uid://djd0vqkksriww" path="res://icon.svg" id="1_ppyta"]
 [ext_resource type="Script" uid="uid://d4dsq4j0cap1r" path="res://scripts/interfaces/pickable.gd" id="2_6uqi0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mf4mk"]
@@ -12,6 +13,9 @@ sky_material = SubResource("ProceduralSkyMaterial_mf4mk")
 [sub_resource type="Environment" id="Environment_8uh7m"]
 background_mode = 2
 sky = SubResource("Sky_37kl0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykrsh"]
+albedo_texture = ExtResource("1_ppyta")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8uh7m"]
 
@@ -33,6 +37,7 @@ environment = SubResource("Environment_8uh7m")
 [node name="CSGBox3D" type="CSGBox3D" parent="stage"]
 transform = Transform3D(35.28751, 0, 0, 0, 0.43929368, 0, 0, 0, 35.28751, 0, -0.5, 0)
 use_collision = true
+material = SubResource("StandardMaterial3D_ykrsh")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 6.3347583, 0, 0, 0, 13.783962, 8.683643, 2.738545, 7.375381)

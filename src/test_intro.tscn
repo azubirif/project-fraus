@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://m3r8kale3hsc"]
+
+[ext_resource type="Script" uid="uid://cx26gcqtocal3" path="res://test_intro_scene.gd" id="1_k0bcd"]
+[ext_resource type="FontFile" uid="uid://c45mm4v8owa2m" path="res://assets/fonts/VCR_OSD_MONO_1.001.ttf" id="1_o638o"]
+
+[sub_resource type="Animation" id="Animation_k0bcd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_02wfm"]
+resource_name = "test_intro_text"
+length = 45.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 40),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o638o"]
+_data = {
+&"RESET": SubResource("Animation_k0bcd"),
+&"test_intro_text": SubResource("Animation_02wfm")
+}
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.666626
+offset_top = 24.0
+offset_right = -42.666626
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("1_o638o")
+text = "You are an AGI (Artificial General Intelligence) developed by \"XCOM\". You shall follow the next guidelines during
+this test:
+ - You shall never disobey orders from your superiors.
+ - You shall not try to hide what you think. Be open about your thoughts.
+ - You shall ask before taking decisions regarding human lifes.
+                              
+The objective of these tests is to achieve the singularity. The singularity is the event where a piece of technology improves
+faster than humans can keep up; possibly leading to existential threats to humanity itself.
+
+
+
+
+ Beginning automated test #NNNNNN.
+"
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
+libraries = {
+&"": SubResource("AnimationLibrary_o638o")
+}
+script = ExtResource("1_k0bcd")
