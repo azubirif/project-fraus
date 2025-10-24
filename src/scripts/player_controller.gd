@@ -26,8 +26,6 @@ func _input(event: InputEvent) -> void:
 		rotate_y(-deg_to_rad(event.relative.x * mouse_sens))
 		head.rotate_x(-deg_to_rad(event.relative.y * mouse_sens))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-50), deg_to_rad(0))
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
 
 func _process(delta: float) -> void:
 	handle_zoom(delta)

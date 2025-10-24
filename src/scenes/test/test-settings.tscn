@@ -1,0 +1,91 @@
+[gd_scene load_steps=2 format=3 uid="uid://tu5046kflpoi"]
+
+[ext_resource type="Script" uid="uid://dpeuh14cayvnm" path="res://scenes/test/test_settings.gd" id="1_idv7s"]
+
+[node name="TestSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_idv7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.24705882)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -35.0
+offset_right = 58.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sound_container" type="VBoxContainer" parent="MarginContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect/VBoxContainer/sound_container"]
+layout_mode = 2
+text = "Volume"
+
+[node name="master_vol_cont" type="VBoxContainer" parent="MarginContainer/ColorRect/VBoxContainer/sound_container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect/VBoxContainer/sound_container/master_vol_cont"]
+layout_mode = 2
+text = "Master volume"
+
+[node name="master_vol_slider" type="HSlider" parent="MarginContainer/ColorRect/VBoxContainer/sound_container/master_vol_cont"]
+layout_mode = 2
+
+[node name="video_container" type="VBoxContainer" parent="MarginContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect/VBoxContainer/video_container"]
+layout_mode = 2
+text = "Video"
+
+[node name="resolution_cont" type="VBoxContainer" parent="MarginContainer/ColorRect/VBoxContainer/video_container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect/VBoxContainer/video_container/resolution_cont"]
+layout_mode = 2
+text = "Resolution scale"
+
+[node name="res_scale_slider" type="HSlider" parent="MarginContainer/ColorRect/VBoxContainer/video_container/resolution_cont"]
+layout_mode = 2
+
+[node name="window_cont" type="VBoxContainer" parent="MarginContainer/ColorRect/VBoxContainer/video_container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect/VBoxContainer/video_container/window_cont"]
+layout_mode = 2
+text = "Window"
+
+[node name="window_mode_picker" type="OptionButton" parent="MarginContainer/ColorRect/VBoxContainer/video_container/window_cont"]
+layout_mode = 2
+
+[node name="close" type="Button" parent="MarginContainer/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[connection signal="item_selected" from="MarginContainer/ColorRect/VBoxContainer/video_container/window_cont/window_mode_picker" to="." method="_on_window_mode_picker_item_selected"]
+[connection signal="button_up" from="MarginContainer/ColorRect/VBoxContainer/close" to="." method="_on_close_button_up"]

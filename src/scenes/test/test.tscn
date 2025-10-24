@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cs53ghighs1sd"]
+[gd_scene load_steps=13 format=3 uid="uid://cs53ghighs1sd"]
 
-[ext_resource type="Script" uid="uid://bw5kf4dpr8vrs" path="res://scripts/interfaces/interactable.gd" id="1_8uh7m"]
-[ext_resource type="Script" uid="uid://bx6h6xb310tf" path="res://scripts/player_controller.gd" id="1_37kl0"]
-[ext_resource type="Texture2D" uid="uid://djd0vqkksriww" path="res://icon.svg" id="1_ppyta"]
-[ext_resource type="Script" uid="uid://d4dsq4j0cap1r" path="res://scripts/interfaces/pickable.gd" id="2_6uqi0"]
+[ext_resource type="Texture2D" uid="uid://djd0vqkksriww" path="res://icon.svg" id="1_51e2l"]
+[ext_resource type="Script" uid="uid://bw5kf4dpr8vrs" path="res://scripts/interfaces/interactable.gd" id="2_oj4i3"]
+[ext_resource type="Script" uid="uid://d4dsq4j0cap1r" path="res://scripts/interfaces/pickable.gd" id="3_k6n02"]
+[ext_resource type="Script" uid="uid://bx6h6xb310tf" path="res://scripts/player_controller.gd" id="4_1suh2"]
+[ext_resource type="PackedScene" uid="uid://b3ie5sgf5jhmb" path="res://scenes/test/test-pause.tscn" id="5_oj4i3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mf4mk"]
 
@@ -15,7 +16,7 @@ background_mode = 2
 sky = SubResource("Sky_37kl0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ykrsh"]
-albedo_texture = ExtResource("1_ppyta")
+albedo_texture = ExtResource("1_51e2l")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8uh7m"]
 
@@ -50,11 +51,11 @@ use_collision = true
 [node name="CSGBox3D4" type="CSGBox3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9323287, 0, 8.638779)
 use_collision = true
-script = ExtResource("1_8uh7m")
+script = ExtResource("2_oj4i3")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9648876, -5.857795)
-script = ExtResource("2_6uqi0")
+script = ExtResource("3_k6n02")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="stage/RigidBody3D"]
 shape = SubResource("BoxShape3D_8uh7m")
@@ -64,7 +65,7 @@ mesh = SubResource("BoxMesh_6uqi0")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9254341, 0)
-script = ExtResource("1_37kl0")
+script = ExtResource("4_1suh2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_mf4mk")
@@ -84,3 +85,12 @@ visible = false
 
 [node name="leave" type="Node3D" parent="CharacterBody3D/head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3844279)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_oj4i3")]
+visible = false
+
+[node name="controllers" type="Node3D" parent="."]
+
+[node name="ui" type="Node3D" parent="controllers"]
