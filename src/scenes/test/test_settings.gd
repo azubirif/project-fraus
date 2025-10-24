@@ -8,8 +8,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	if Input.is_action_just_pressed("pause"):
+		hide()
 func _populate_window_mode_picker():
 	window_mode_picker.add_item("Windowed", DisplayServer.WINDOW_MODE_WINDOWED)
 	window_mode_picker.add_item("Fullscreen", DisplayServer.WINDOW_MODE_FULLSCREEN)
